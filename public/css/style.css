@@ -1,0 +1,132 @@
+html,
+body,
+.container,
+.row {
+  height: 100%;
+}
+
+#searchInput  {
+  width: 100%;
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+
+}
+
+#searchInput::placeholder {
+  font-style: italic;
+}
+
+#companiesMasterView,
+#companiesDetailView {
+  background-color: #f7f7f7;
+}
+
+#companySearch {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#companySearch #searchResults {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 110px);
+  border
+  : 1px solid black;
+}
+#companySearch #searchResults h4{
+  background: white;
+  border: 1px solid black;
+}
+
+#companySearch #searchResults h4 #matchCount{
+  margin-left: 5px;
+}
+
+#companySearch #searchResults #matchCount {
+  padding-right: 8px;
+}
+
+#companySearch #searchResults #searchResultsList {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+#companySearch #searchResults #searchResultsList #itemList .companyAvatarThumbnail {
+  height: 60px;
+  width: 100px;
+  vertical-align: middle;
+  text-align: center;
+  border: 1px solid grey;
+  margin-right: 10px;
+  display: inline-block;
+}
+#companySearch #searchResults #searchResultsList #itemList .companyAvatarThumbnail img{
+  max-height: 100%;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+#companySearch #searchResults #searchResultsList #itemList .list-item-name {
+  display: inline-block;
+  word-wrap: normal;
+}
+
+#companySearch #paginator {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+#companySearch #paginator #pager #pagerButtons,#pagerMessage{
+ display: inline-block;
+}
+
+
+#companySearch #limitSelect {
+  margin-top: 4px;
+}
+
+#companyProfile {
+  background-color: #f7f7f7;
+}
+
+#companyProfile #companyName {
+  margin: 50px auto 30px auto;
+  text-align: center
+}
+
+#companyProfile #companyProfileContent #companyAvatar {
+  max-width: 80%;
+  margin: 30px auto 30px auto;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#companyProfile #companyProfileContent #companyAvatar img {
+  max-width: 100%;
+}
+
+#companyProfile #companyProfileContent #companyProfileDetails .company-profile-detail {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+#companyProfileEmpty {
+  text-align: center;
+  vertical-align: middle;
+}
+
+#companyProfileEmpty p{
+  margin-top: 200px;
+}
+
+.hidden {
+  display: none;
+}
+
+.bordered {
+  border: solid 1px black;
+}

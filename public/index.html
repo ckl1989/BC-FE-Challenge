@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <!--Bootstrap CSS-->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <title>Companies</title>
+</head>
+
+<body onload="init()">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 bordered" id="companiesMasterView">
+        <div id="companySearch">
+          <div id="searchBox">
+            <input type="text" id="searchInput"
+              name="companyName" value="">
+          </div>
+          <div id="searchResults">
+            <h4><span id="matchCount"> </span><span>best matches</span></h4>
+            <div id="searchResultsList">
+              <table id="itemList" class="table table-hover">
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="paginator">
+            <div id="pager">
+              <div id="pagerButtons">
+                <button class="btn btn-secondary" type="button" id="backButton">&larr;</button>
+                <button class="btn btn-secondary" type="button" id="forwardButton">&rarr;</button>
+              </div>
+              <div id="pagerMessage">
+                <p>Page <span id="pageNumber"></span></p>
+              </div>
+            </div>
+            <div id="limitSelect" class="">
+                <span>Show: </span><select class="selectpicker" id="limitOptionsSelect"> </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 bordered" id="companiesDetailView">
+        <div id="companyProfile" class="hidden">
+          <h3 id="companyName"></h3>
+          <div id="companyProfileContent">
+            <div id="companyAvatar"></div>
+            <div id="companyProfileDetails">
+              <p><span class="company-profile-detail">Labor:</span><span id="companyLaborType"> </span></p>
+              <p><span class="company-profile-detail">Phone:</span><span id="companyPhone"> </span></p>
+              <p><span class="company-profile-detail">Website:</span> <a id="companyWebsite" href="#"></a></p>
+            </div>
+          </div>
+        </div>
+        <div id="companyProfileEmpty">
+          <p> Select a Company on the left to see its details </p>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Files -->
+  <script src="main.js"></script>
+  <script src="app.js"></script>
+
+  <script src="/services/companiesService.js"></script>
+
+  <script src="/controller/companiesController.js"></script>
+
+  <script src="/model/company.js"></script>
+
+  <script src="/components/companyProfile.js"></script>
+  <script src="/components/companySearch.js"></script>
+  <script src="/components/component.js"></script>
+  <script src="/components/limitSelect.js"></script>
+  <script src="/components/pager.js"></script>
+  <script src="/components/paginator.js"></script>
+  <script src="/components/searchBox.js"></script>
+  <script src="/components/searchResults.js"></script>
+  <script src="/components/searchResultsList.js"></script>
+</body>
+
+</html>
