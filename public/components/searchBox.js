@@ -22,9 +22,19 @@ class SearchBox extends Component{
   }
 
   _attachEventHandlers(){
-    this.inputEl.addEventListener('keyup', () => {
+    this.inputEl.addEventListener('keyup', this._delay(() => {
       this.options.searchCompanyCB(this.inputEl.value);
       return false;
-    });
+    }));
+  }
+
+  _delay(callback){
+    var timer = 0;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback();
+      }, 1000);
+    }
   }
 }

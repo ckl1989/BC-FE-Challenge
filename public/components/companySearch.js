@@ -22,8 +22,6 @@ class CompanySearch extends Component {
       start: 0
     }
 
-    this.timer = 0;
-
     this.searchBoxComponent = new SearchBox(this.parent.querySelector("#searchBox"), {
       searchCompanyCB: this.searchCompanyCB.bind(this)
     });
@@ -48,16 +46,13 @@ class CompanySearch extends Component {
     });
   }
 
-  searchCompanyCB(value) {
+  searchCompanyCB(value){
     this.fetchOptions.q = value;
     this.fetchOptions.start = 0;
 
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-      this.options.fetchDataCB(this.fetchOptions).then((response) => {
-        this.setSearchResults(response);
-      })
-    }, 1000);
+    this.options.fetchDataCB(this.fetchOptions).then((response) => {
+      this.setSearchResults(response);
+    })
   }
 
   pageChangedCB(newPageNumber) {
