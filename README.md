@@ -1,96 +1,34 @@
 # Frontend Challenge
 
-## Your Task
+## Context
+Coming into this challenge, I first looked at the constraints given by the API and the challenge requirements in order to come up with a reasonable architecture and UX design.
 
-We've provided you with a simple Express server that provides an API for querying company data and serves up static content from the `public` directory.
+It was an interesting experience working with plain javascript since at work we work only in ES5 and JQuery, and my side projects consisted primarily of Rails and Ember.js.
 
-We would like you to build a simple UI for searching these companies by name and selecting a company to show more details. The search results must show at least the company name, and the more detailed view should display all of the data you get back from the server for the selected company.
+I'm going to try to describe a bit of my thought process for why I chose to do what I did.
 
-We expect candidates to spend about 2 hours on this.
+## Constraints
+API Constraint:
+* The only given service API was a GET Companies, which returned a JSON of companies that has no ID. The API also only had a unordered fuzzy search so I couldn't be guaranteed to get back a specific company given a name. For this reason, I decided that selecting a company and displaying its details had to be done by maintaining a "store" of companies fetched in the service request. This store would be referenced when a company was selected in the list and its data would be used in the profile view.
 
-A few specific requirements:
+Challenge Requirement Constraint:
+* Service request submissions happening on delayed keystroke rather than a submission button was kind of a mind bending situation for me. Initially I was going to do a simple search UI where a user could specify all query options first, then hit submit, leading to another page with search results. With the mentioned requirement, though, I went for more of a single page master/detail pattern that more instantly showed search query results.
 
-* While the user is typing in their search string don't actually send the query to the API until it's been 1 second since their last keystroke, so as to avoid sending a bajillion requests. 
-* Don't use any basic utility libraries (e.g. jQuery, Lodash, Underscore, Ramda).
-* Don't use any front-end frameworks (e.g. React, Angular, Ember).
-* Search results should be pageable (or infinite scroll-able)
+## Architecture
+* I chose to use ES6 and its classes feature so that I could easily instantiate new objects that would cleanly describe what each piece of the UI did. It allowed me to separate each UI component into descriptive classes that made it easier to read and scale as needed.
 
-If you have some spare time at the end here are a few stretch goals:
+* Initially I tried, to construct this in a "React"-ish way where each component would render its own related DOM elements but instead of writing a million document.createElement()'s or setting strings onto the element.innerHTML, I decided to use the index.html as sort of a template for all static elements. The difficulty with doing something with innerHTML is that it makes it difficult to nest components within each other and attach their require event handlers since those DOM elements don't even exist yet.
 
-* Make your design responsive, so it works well across various device sizes
-* Focus on polishing the UI to look slick
-* Allow filtering results by labor type
+* Each component is attached to a DOM element in the template and is essentially the JS logic on that specific element. Child components are initialized inside the component with the respective child DOM element.
 
-## Our Goal
+* Instead of storing page/limit/query options in the URL hash and doing some sort of onHashChange event to fire off request calls, I opted for a general pattern Ember.js revolves around (I'm not sure if this is used in React). It is the "Data Down, Action Up" pattern, where data gets passed "down", to the many layers of components, while actions(aka callbacks) are passed through to components in their options param so that they can be called on something like a button click. The action will be sent "up" to the parent component that defined that callback, which in turn can do something with another component that is a child of that parent.
 
-We want to get a feel for how you approach the basic problems of front-end applications and what your UX instincts are like. Some bonus points if it is pretty, but don't worry, we're not hiring you to be a full-time designer.
+## Other Considerations
+* I probably could have tied each component to a template html file similar to how Ember does it. It would just require loading the html for every component
 
-Things we're looking for:
+* Unfortunately I didn't get to adding in the Labor Types filter but what I'd do is between the search box and the search results components, I'd add another component that would expand and display labor types in checkbox form. Upon each checkbox selection, the search results would update instantly, to match how the company name search works.
 
-* Clear, readable code
-* A UI that is easy to use and doesn't look terrible
-* A solid understanding of front-end JS fundamentals
+## Conclusion
+Overall this assignment was a lot of fun and I learned a huge amount. Coming from a background of JQuery, ES5, and a proprietary framework at Informatica, I honestly had to look up a lot of things and figure out how things worked in the "modern" age. Even now I can think of so many ways to build upon what I have, but I guess that's the way with everything!
 
-Things we're not looking for:
-
-* Blazing fast performance
-* Total cross-browser functionality (i.e. it is okay if it only works in modern browsers)
-
-## Getting started
-
-You can install dependencies and start up the server with a quick `npm install && npm start`. Once it is running you can hit the `public/index.html` page at [http://localhost:3000](http://localhost:3000), which should show a "Hello, world" message.
-
-The companies API lives at [http://localhost:3000/api/companies](http://localhost:3000/api/companies). It takes in the following parameters:
-
-| Query param | Effect |
-| ----------- | ------ |
-| q           | Limits the results to companies with names that match `q` |
-| start       | Returns result starting at the `start`th result |
-| limit       | Restricts the result set to include no more than `limit` results |
-| laborTypes  | A comma delimited list of labor types to filter by (all must match) |
-
-And returns results similar to this:
-
-```js
-{
-  "total": 500,
-  "results": [
-    {
-      "avatarUrl": "https:\/\/bc-prod.imgix.net\/avatars\/5430e7a55cdc2e0300dd72ef.png?auto=format&fit=fill&bg=fff",
-      "laborType": [
-        "Union"
-      ],
-      "name": "BASS Electric",
-      "phone": "(261) 917-1637",
-      "website": "http:\/\/bufodu.ps\/pakzer"
-    },
-    {
-      "avatarUrl": "https:\/\/bc-prod.imgix.net\/avatars\/5430e7a55cdc2e0300dd7310.jpeg?auto=format&fit=fill&bg=fff",
-      "laborType": [
-        "Non-Union",
-        "Union"
-      ],
-      "name": "Rex Moore Group, Inc.",
-      "phone": "(949) 700-2752",
-      "website": "http:\/\/wa.ch\/wisli"
-    }
-  ]
-}
-```
-
-## Submission
-
-Simply create a GitHub repo and email us the link!
-
-### Zip folder
-
-Just zip up your solution (minus the node_modules directory) and email it to whoever you were in contact with for your initial interview with the subject line "Frontend Coding Challenge".
-
-### GitHub Repo
-
-1. Clone this repo locally, e.g. `git clone git@github.com:buildingconnected/fe-challenge.git`
-1. Do awesome programming work, committing your changes as you go
-1. Whenever you're ready to submit, go create a [new GitHub repo](https://help.github.com/articles/create-a-repo/#create-a-new-repository-on-github) named whatever you like
-1. Inside your local clone of this `fe-challenge` repo run `git remote add submission git@github.com:<your_account>/<whatever_you_named_your_repo>`
-1. Push your changes to your new GH repo, e.g. `git push submission master`
-1. Send us a link to your GH repo
+Thank you for the opportunity to work on this challenge. It was a great experience!
